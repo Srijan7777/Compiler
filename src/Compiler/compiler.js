@@ -28,17 +28,15 @@ export default class Compiler extends Component {
     let outputText = document.getElementById("output");
     outputText.innerHTML = "";
     outputText.innerHTML += "Creating Submission ...\n";
-    const response = await fetch(
-      "https://judge0-extra.p.rapidapi.com/submissions",
-      {
-        method: "POST",
-        headers: {
-          "x-rapidapi-host": "judge0-extra.p.rapidapi.com",
-          "x-rapidapi-key": "86d236c9afmshe2c502782f701f5p1ef82ejsnf4fdb736ff4d", //// Get yours for free at https://rapidapi.com/hermanzdosilovic/api/judge0
-          "content-type": "application/json",
-           accept: "application/json",
-        },
-        body: JSON.stringify({
+    const response = await fetch("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&fields=*", {
+	"method": "POST",
+	"headers": {
+		"content-type": "application/json",
+		"x-rapidapi-key": "86d236c9afmshe2c502782f701f5p1ef82ejsnf4fdb736ff4d",
+		"x-rapidapi-host": "judge0-ce.p.rapidapi.com"
+	},
+        body:
+         JSON.stringify({
           source_code: this.state.input,
           stdin: this.state.user_input,
           language_id: this.state.language_id,
@@ -61,14 +59,14 @@ export default class Compiler extends Component {
     ) {
       outputText.innerHTML = `Creating Submission ... \nSubmission Created ...\nChecking Submission Status\nstatus : ${jsonGetSolution.status.description}`;
       if (jsonResponse.token) {
-        let url = `https://judge0-extra.p.rapidapi.com/submissions/${jsonResponse.token}?base64_encoded=true`;
+        let url = `https://judge0-ce.p.rapidapi.com/submissions/2e979232-92fd-4012-97cf-3e9177257d10${jsonResponse.token}?base64_encoded=true`;
 
         const getSolution = await fetch(url, {
           method: "GET",
           headers: {
-            "x-rapidapi-host": "judge0-extra.p.rapidapi.com",
-            "x-rapidapi-key": "Your API Key", //// Get yours for free at https://rapidapi.com/hermanzdosilovic/api/judge0
-            "content-type": "application/json",
+             'x-rapidapi-key': '86d236c9afmshe2c502782f701f5p1ef82ejsnf4fdb736ff4d',
+             'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
+             "content-type": "application/json",
           },
         });
 
